@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "OWASP Top 10 - Home Page";
+}
+
+<div class="text-left">
+    <h1 class="display-4">Welcome to an overview of OWASP Top 10.</h1>
+    <p>This project is to demonstrate good/bad practices that lead to insecure coding paradigms.<br />Review <a href="https://owasp.org/www-project-top-ten/" target="_blank">OWASP Top 10 - 2021 here</a>.<br /><br />
+       Our target deployment will be on Azure Linux, your deployment/location mileage may vary.
+    </p>
+</div>
+<hr />
+<h3>ASP.NET Core 5.0.</h3>
+<div class="table">
+    <div class="row">
+        <div class="col-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Topic 1 - Broken Access Control</h5>
+                    <p class="card-text">Path Traversal, Open Redirects, Exposure of sensitive data, improper Cookies, missing/incorrect Authorization, <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank">more</a>.</p>
+                    <a class="btn btn-secondary" asp-area="" asp-controller="Topic1" asp-action="Index">View &raquo;</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Topic 2 - Cryptographic Failures</h5>
+                    <p class="card-text">Deprecated Protocols, Password and Key storage, Sensitive Data Exposure</p>
+                    <a class="btn btn-secondary" asp-area="" asp-controller="Topic2" asp-action="Index">View &raquo;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Topic 3 - Injection</h5>
+                    <p class="card-text">...</p>
+                    <a class="btn btn-secondary" asp-area="" asp-controller="Topic3" asp-action="Index">View &raquo;</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Topic 4 - Insecure Design</h5>
+                    <p class="card-text">...</p>
+                    <a class="btn btn-secondary" asp-area="" asp-controller="Topic4" asp-action="Index">View &raquo;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Topic 5 - Security Misconfiguration</h5>
+                    <p class="card-text">...</p>
+                    <a class="btn btn-secondary" asp-area="" asp-controller="Topic3" asp-action="Index">View &raquo;</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Topic 6 - Vulnerable and Outdated Components</h5>
+                    <p class="card-text">...</p>
+                    <a class="btn btn-secondary" asp-area="" asp-controller="Topic6" asp-action="Index">Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
