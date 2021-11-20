@@ -1,0 +1,76 @@
+﻿@using OWASP10_2021.Models
+@using System.Linq
+@model IEnumerable<DirAndFile>
+
+@{
+    Layout = "/Views/Shared/_BankLayoutAdmin.cshtml";
+    var showingUpDirectory = !string.IsNullOrWhiteSpace(@ViewBag.Path);
+}
+
+<div class="site-section" id="next">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h3>File Manager</h3>
+                <p>Please be careful</p>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 ml-auto" data-aos="fade-up" data-aos-delay="10">
+                <div class="mb-4">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                        </tr>
+                        @if (showingUpDirectory)
+                        {
+                            showingUpDirectory = false;
+
+                            <tr>
+                                <td><a href="/admin/Home/FileManager/?path=@(ViewBag.UpDirectory)">Up Directory</a></td>
+                                <td>Directory</td>
+                            </tr>
+                        }
+                        @foreach (var Dir in Model.Where(x => x.Type == "D"))
+                        {
+                            <tr>
+                                <td><a href="/admin/Home/FileManager/?path=@System.IO.Path.GetRelativePath(ViewBag.DefaultPath, Dir.Path)">@Dir.Name</a></td>
+                                <td>Directory</td>
+                            </tr>
+                        }
+
+
+                        @foreach (var File in Model.Where(x => x.Type == "F"))
+                        {
+                            <tr>
+                                <td><a href="/admin/Home/FileManager/Contents?path=@System.IO.Path.GetRelativePath(ViewBag.DefaultPath, File.Path)">@File.Name</a></td>
+                                <td>File</td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <h3>Upload/Replace Files</h3>
+            @using (Html.BeginForm("FileManager", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <div class="col-1">File</div>
+                    <div class="col-3">@Html.TextBox("Name", "", new { type = "file" })</div>
+                </div>
+                <div class="row">
+                    @Html.Hidden("Path", ViewBag.Path, null)
+                    <div class="col-4"><input type="submit" name="Submit" id="submit" value="Upload" /></div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
