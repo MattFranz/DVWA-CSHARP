@@ -17,8 +17,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore 'CSharp/DVWA-CSHARP.sln'
-      working-directory: ${{env.working-directory}}
+      run: dotnet restore
+      working-directory: 'src/CSharp/DVWA-CSHARP.sln'
     - name: Build
       run: dotnet build --no-restore
     - name: Test
