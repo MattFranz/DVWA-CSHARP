@@ -11,7 +11,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-     working-directory: './CSharp'
+     working-directory: './src'
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
@@ -19,7 +19,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore DVWA-CSHARP.sln
+      run: dotnet restore 'CSharp/DVWA-CSHARP.sln'
+      working-directory: ${{env.working-directory}}
     - name: Build
       run: dotnet build --no-restore
     - name: Test
