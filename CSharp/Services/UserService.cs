@@ -1,5 +1,9 @@
 ﻿using OWASP10_2021.Models;
 using System.Threading.Tasks;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace OWASP10_2021.Services
 {
@@ -17,16 +21,34 @@ namespace OWASP10_2021.Services
             if (string.IsNullOrEmpty(password))
                 return await Task.FromResult<User>(null);
 
-            switch (username.ToLower())
-            {
-                case "admin":
-                    {
-                        if (password == "admin")
-                            return await Task.FromResult(new User() { Id="admin", Username = "Super Admin" });
-                        break;
-                    }
-            }
-            return await Task.FromResult<User>(null);
+            return await GetUser(username, password);
+        }
+
+        private async Task<User> GetUser(string user, string password)
+        {
+            if (string.IsNullOrWhiteSpace(user))
+                throw new ArgumentException();
+
+            user = user.ToLower().Trim();
+            var userText = await File.ReadAllTextAsync(Path.Combine(Startup.WebRootPath, "_private/passwords_admin.txt"));
+            var userInfo = userText
+                .Split("\n", System.StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => new User()
+                {
+                    Id = SplitAndGetOrdinal(x, ",", 0),
+                    Username = SplitAndGetOrdinal(x, ",", 0),
+                    PasswordHash = SplitAndGetOrdinal(x, ",", 1),
+                    Role = SplitAndGetOrdinal(x, ",", 2)
+                })
+                .Where(x => x.Username == user && Encryption.ComputeHash(password) == x.PasswordHash)
+                .SingleOrDefault();
+
+            return userInfo;
+        }
+
+        private string SplitAndGetOrdinal(string theString, string seperator, int ordinal)
+        {
+            return theString.Split(seperator, System.StringSplitOptions.RemoveEmptyEntries)[ordinal];
         }
     }
 }

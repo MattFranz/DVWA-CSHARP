@@ -48,24 +48,7 @@
                     <div class="col-12 col-md-10 d-none d-xl-block">
                         <nav class="site-navigation position-relative text-right" role="navigation">
 
-                            <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                                <li class="has-children">
-                                    <a href="#home-section" class="nav-link">Admin</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#team-section" class="nav-link">Accounts</a></li>
-                                        <li><a href="/admin/home/filemanager" class="nav-link">File Manager</a></li>
-                                        <li class="has-children">
-                                            <a href="#">More Links</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Menu One</a></li>
-                                                <li><a href="#">Menu Two</a></li>
-                                                <li><a href="#">Menu Three</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                            </ul>
+                            @RenderSection("AdminMenu")
                         </nav>
                     </div>
 

@@ -62,10 +62,14 @@ namespace OWASP10_2021.Handlers
                 var password = credentials[1];
                 user = await _userService.Authenticate(username, password);
 
+                if (user == null)
+                    return await Task.FromResult(AuthenticateResult.Fail("Invalid Credentials"));
+
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id),
                     new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.Role, user.Role)
                 };
 
                 var identity = new ClaimsIdentity(claims, Scheme.Name);
@@ -80,8 +84,6 @@ namespace OWASP10_2021.Handlers
                 return await Task.FromResult(AuthenticateResult.Fail("Error Occured.Authorization failed."));
             }
 
-            if (user == null)
-                return await Task.FromResult(AuthenticateResult.Fail("Invalid Credentials"));
         }
     }
 }

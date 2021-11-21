@@ -5,6 +5,35 @@
 @{
     Layout = "/Views/Shared/_BankLayoutAdmin.cshtml";
     var showingUpDirectory = !string.IsNullOrWhiteSpace(@ViewBag.Path);
+    User user = ViewBag.User;
+}
+
+@section AdminMenu
+{
+    <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+        <li class="has-children">
+            <a href="#home-section" class="nav-link">Admin</a>
+            <ul class="dropdown">
+                @if (user.Role == "accounts")
+                {
+                    <li><a href="#team-section" class="nav-link">Accounts</a></li>
+                }
+                @if (user.Role == "filemanager")
+                {
+                    <li><a href="/admin/home/filemanager" class="nav-link">File Manager</a></li>
+                }
+                @*<li class="has-children">
+                    <a href="#">More Links</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Menu One</a></li>
+                        <li><a href="#">Menu Two</a></li>
+                        <li><a href="#">Menu Three</a></li>
+                    </ul>
+                </li>*@
+            </ul>
+        </li>
+
+    </ul>
 }
 
 <div class="site-section" id="next">

@@ -17,7 +17,8 @@ namespace OWASP10_2021.Areas.Admin.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            return View();
+            var user = OWASP10_2021.Models.User.GetUserFromClaim(User);
+            return View(user);
         }
 
         public async Task<IActionResult> FileManager(string path)
@@ -33,6 +34,9 @@ namespace OWASP10_2021.Areas.Admin.Controllers
             {
                 ViewBag.Path = path;
             }
+
+            var user = OWASP10_2021.Models.User.GetUserFromClaim(User);
+            ViewBag.User = user;
 
             ViewBag.DefaultPath = Startup.WebRootPath;
 

@@ -11,6 +11,7 @@ using OWASP10_2021.Services;
 using System;
 using Microsoft.AspNetCore.Authentication;
 using OWASP10_2021.Handlers;
+using Microsoft.OpenApi.Models;
 
 namespace OWASP10_2021
 {
@@ -49,6 +50,21 @@ namespace OWASP10_2021
             services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
             services.AddApplicationInsightsTelemetry();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "OSCorp Bank API",
+                    Version = "v1",
+                    Description = "Description for the API goes here.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "The Watcher",
+                        Email = "watcher@mcu.universe",
+                        Url = new Uri("https://locahost/"),
+                    },
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +99,12 @@ namespace OWASP10_2021
                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                );
                 endpoints.MapRazorPages();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "OSCorp Bank API V1");
             });
         }
     }
