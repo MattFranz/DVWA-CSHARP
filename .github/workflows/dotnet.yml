@@ -10,7 +10,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+     working-directory: './CSharp'
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
@@ -18,7 +19,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore '/DVWA-CSHARP.Web/OWASP10-2021.sln'
     - name: Build
       run: dotnet build --no-restore
     - name: Test
