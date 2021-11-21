@@ -30,21 +30,10 @@ namespace OWASP10_2021.Handlers
         }
         protected override Task HandleChallengeAsync(AuthenticationProperties properties)
         {
-            //if (!Request.IsHttps)
-            //{
-            //    const string insecureProtocolMessage = "Request is HTTP, Basic Authentication will not respond.";
-            //    Logger.LogInformation(insecureProtocolMessage);
-            //    // 421 Misdirected Request
-            //    // The request was directed at a server that is not able to produce a response.
-            //    // This can be sent by a server that is not configured to produce responses for the combination of scheme and authority that are included in the request URI.
-            //    Response.StatusCode = StatusCodes.Status421MisdirectedRequest;
-            //}
-            //else
-            //{
-                Response.StatusCode = 401;
-                var headerValue = $"Basic realm=OsCorp";
-                Response.Headers.Append(HeaderNames.WWWAuthenticate, headerValue);
-            //}
+            Response.StatusCode = 401;
+            var headerValue = $"Basic realm=OsCorp";
+            Response.Headers.Append(HeaderNames.WWWAuthenticate, headerValue);
+
 
             return Task.CompletedTask;
         }
@@ -74,7 +63,6 @@ namespace OWASP10_2021.Handlers
 
                 var identity = new ClaimsIdentity(claims, Scheme.Name);
                 var principal = new ClaimsPrincipal(identity);
-
                 var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
                 return AuthenticateResult.Success(ticket);
@@ -83,7 +71,6 @@ namespace OWASP10_2021.Handlers
             {
                 return await Task.FromResult(AuthenticateResult.Fail("Error Occured.Authorization failed."));
             }
-
         }
     }
 }
