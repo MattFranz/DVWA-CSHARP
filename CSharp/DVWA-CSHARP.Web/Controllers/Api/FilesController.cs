@@ -41,13 +41,20 @@ namespace OWASP10_2021.Controllers.Api
 
         [HttpGet("Contents")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetContents(string path, string contentType)
+        public IActionResult GetContents(string path, string contentType, bool forcedDownload = false)
         {
             path = Path.Combine(Startup.WebRootPath, path ?? string.Empty);
             
             if (!System.IO.File.Exists(path))
                 return NotFound();
 
+            var attr = System.IO.File.GetAttributes(path);
+            var fileName = Path.GetFileName(path);
+
+            if (forcedDownload && !attr.HasFlag(FileAttributes.Directory))
+            {
+                Response.Headers.ContentDisposition = $"attachment;filename=\"{fileName}\"";
+            }
             return File(System.IO.File.ReadAllBytes(path), contentType ??= "application/json");
         }
 

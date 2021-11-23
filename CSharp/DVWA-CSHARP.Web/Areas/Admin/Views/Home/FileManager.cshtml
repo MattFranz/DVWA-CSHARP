@@ -10,30 +10,30 @@
 
 @section AdminMenu
 {
-    <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-        <li class="has-children">
-            <a href="#home-section" class="nav-link">Admin</a>
-            <ul class="dropdown">
-                @if (user.Role == "accounts")
-                {
-                    <li><a href="#team-section" class="nav-link">Accounts</a></li>
-                }
-                @if (user.Role == "filemanager")
-                {
-                    <li><a href="/admin/home/filemanager" class="nav-link">File Manager</a></li>
-                }
-                @*<li class="has-children">
-                    <a href="#">More Links</a>
-                    <ul class="dropdown">
-                        <li><a href="#">Menu One</a></li>
-                        <li><a href="#">Menu Two</a></li>
-                        <li><a href="#">Menu Three</a></li>
-                    </ul>
+<ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+    <li class="has-children">
+        <a href="#home-section" class="nav-link">Admin</a>
+        <ul class="dropdown">
+            @if (user.Role == "accounts")
+            {
+            <li><a href="#team-section" class="nav-link">Accounts</a></li>
+            }
+            @if (user.Role == "filemanager")
+            {
+            <li><a href="/admin/home/filemanager" class="nav-link">File Manager</a></li>
+            }
+            @*<li class="has-children">
+                <a href="#">More Links</a>
+                <ul class="dropdown">
+                <li><a href="#">Menu One</a></li>
+                <li><a href="#">Menu Two</a></li>
+                <li><a href="#">Menu Three</a></li>
+                </ul>
                 </li>*@
-            </ul>
-        </li>
+        </ul>
+    </li>
 
-    </ul>
+</ul>
 }
 
 <div class="site-section" id="next">
@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-lg-12 ml-auto" data-aos="fade-up" data-aos-delay="10">
                 <div class="mb-4">
-                    <table>
+                    <table style="width:200px;">
                         <tr>
                             <th>Name</th>
                             <th>Type</th>
@@ -71,35 +71,37 @@
                             </tr>
                         }
 
-
                         @foreach (var File in Model.Where(x => x.Type == "F"))
                         {
                             <tr>
-                                <td><a href="/admin/Home/FileManager/Contents?path=@System.IO.Path.GetRelativePath(ViewBag.DefaultPath, File.Path)">@File.Name</a></td>
+                                <td><a target="_blank" href="/api/files/Contents?path=@System.IO.Path.GetRelativePath(ViewBag.DefaultPath, File.Path)&contentType=application/octet-stream&forcedDownload=True">@File.Name</a></td>
                                 <td>File</td>
                             </tr>
                         }
 
                     </table>
                 </div>
-                
+
             </div>
         </div>
-        
+
         <div class="row">
             <h3>Upload/Replace Files</h3>
-            @using (Html.BeginForm("FileManager", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="row">
-                    <div class="col-1">File</div>
-                    <div class="col-3">@Html.TextBox("Name", "", new { type = "file" })</div>
+            <div class="col-lg-12 ml-auto" data-aos="fade-up" data-aos-delay="10">
+                <div class="mb-4">
+                    @using (Html.BeginForm("FileManager", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-1">File</div>
+                            <div class="col-3">@Html.TextBox("Name", "", new { type = "file" })</div>
+                        </div>
+                        <div class="row">
+                            @Html.Hidden("Path", ViewBag.Path, null)
+                            <div class="col-4"><input type="submit" name="Submit" id="submit" value="Upload" /></div>
+                        </div>
+                    }
                 </div>
-                <div class="row">
-                    @Html.Hidden("Path", ViewBag.Path, null)
-                    <div class="col-4"><input type="submit" name="Submit" id="submit" value="Upload" /></div>
-                </div>
-            }
+            </div>
         </div>
-
     </div>
 </div>
